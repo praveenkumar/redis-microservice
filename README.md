@@ -1,5 +1,5 @@
 This is a sample demo of consuming redis db and exposing GET method
-to retrive all the keys and also value of a specific key. This service
+to retrieve all the keys and also value of a specific key. This service
 serves on port `8080`.
 
 Environment variables
