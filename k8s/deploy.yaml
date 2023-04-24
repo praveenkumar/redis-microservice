@@ -1,0 +1,45 @@
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  creationTimestamp: null
+  labels:
+    app: redis-microservice
+  name: redis-microservice
+spec:
+  containers:
+  - image: quay.io/praveenkumar/redis-microservice:latest
+    name: redis-microservice
+    imagePullPolicy: IfNotPresent
+    env:
+    - name: DB_HOST
+      value: redis-leader
+    ports:
+    - containerPort: 8080
+    resources: {}
+    securityContext:
+      allowPrivilegeEscalation: false
+      runAsNonRoot: true
+      seccompProfile:
+        type: RuntimeDefault
+  dnsPolicy: ClusterFirst
+  restartPolicy: Always
+status: {}
+---
+apiVersion: v1
+kind: Service
+metadata:
+  creationTimestamp: null
+  labels:
+    app: redis-microservice
+  name: redis-microservice
+spec:
+  ports:
+  - name: "8080"
+    port: 8080
+    protocol: TCP
+    targetPort: 8080
+  selector:
+    app: redis-microservice
+  type: ClusterIP
+
